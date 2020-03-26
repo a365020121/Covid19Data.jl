@@ -5,6 +5,12 @@ import CSV
 import DataFrames
 
 
+
+confirmedFile =  "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+deathsFile = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+recoveredFile = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
+
+
 function cleanNames(df)
     rename!(df,Symbol("Province/State")=>:ProvinceOrState)
     rename!(df,Symbol("Country/Region")=>:CountryOrRegion)
@@ -38,6 +44,7 @@ function countryData(country,dfType; sumProvinces = true)
     end
 end
 
+export cleanNames, countryData, confirmedFile, deathsFile, recoveredFile
 
 end # module
 
