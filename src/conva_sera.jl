@@ -10,6 +10,8 @@ confirmedFile =  "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/mast
 deathsFile = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 recoveredFile = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
 
+makeDF(url) = CSV.read(IOBuffer(String(HTTP.request("GET",url).body)))
+
 
 function cleanNames(df)
     rename!(df,Symbol("Province/State")=>:ProvinceOrState)
@@ -44,7 +46,7 @@ function countryData(country,dfType; sumProvinces = true)
     end
 end
 
-export cleanNames, countryData, confirmedFile, deathsFile, recoveredFile
+export cleanNames, countryData, confirmedFile, deathsFile, recoveredFile,makeDF
 
 end # module
 
