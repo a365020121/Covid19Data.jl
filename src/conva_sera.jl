@@ -35,6 +35,29 @@ cleanNames(confData)
 cleanNames(deathsData)
 cleanNames(recData)
 
+"""
+        countryData(country, dfType; sumProvinces = true)
+
+# Arguments
+
+- `country::String`: the name of country you want to choice from the dataframe.
+  The country name should in the data.
+
+- `dfType::Symbol`: there are three kinds of dfType: :confirmed, :deaths, :recovered.
+   :confirmed: data of diagnoses
+   :deaths: data of deaths
+   :recovered: data of Rehabilitation
+
+- `sumProvinces::Bool': if the function should return the summary data of the country.
+   For instance, 'sumProvinces = false'. Default argument is false.
+
+# Examples
+    
+countryData("Australia", confirmed）
+countryData("Australia", deaths, sumProvinces = false)
+
+"""
+
 function countryData(country,dfType; sumProvinces = true)
     if dfType == :confirmed
         df = confData
