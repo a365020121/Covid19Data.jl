@@ -16,9 +16,6 @@ confData = makeDF(confirmedFile)
 deathsData = makeDF(deathsFile)
 recData = makeDF(recoveredFile)
 
-cleanNames(confirmedDF)
-cleanNames(deathsDF)
-cleanNames(recoveredDF)
 
 function cleanNames(df)
     rename!(df,Symbol("Province/State")=>:ProvinceOrState)
@@ -31,6 +28,10 @@ function cleanNames(df)
         rename!(df,names(df)[4+i]=>"day$i")
     end
 end
+
+cleanNames(confirmedDF)
+cleanNames(deathsDF)
+cleanNames(recoveredDF)
 
 function countryData(country,dfType; sumProvinces = true)
     if dfType == :confirmed
