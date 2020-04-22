@@ -2,7 +2,7 @@
 
 ```julia
 using Pkg
-Pkg.add(PackageSpec(url = "https://github.com/a365020121/Covid19Pandemic.jl"))
+Pkg.add(PackageSpec(url = "https://github.com/a365020121/Covid19Data.jl"))
 using conva_sera
 ```
 
