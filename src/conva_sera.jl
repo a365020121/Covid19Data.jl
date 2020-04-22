@@ -3,6 +3,12 @@ module conva_sera
 import HTTP
 import CSV
 import DataFrames
+import Statistics
+import Plots
+
+using DataFrames
+using Statistics
+using Plots
 
 
 
@@ -16,6 +22,7 @@ confData = makeDF(confirmedFile)
 deathsData = makeDF(deathsFile)
 recData = makeDF(recoveredFile)
 
+
 function cleanNames(df)
     rename!(df,Symbol("Province/State")=>:ProvinceOrState)
     rename!(df,Symbol("Country/Region")=>:CountryOrRegion)
@@ -28,13 +35,39 @@ function cleanNames(df)
     end
 end
 
+cleanNames(confData)
+cleanNames(deathsData)
+cleanNames(recData)
+
+"""
+        countryData(country, dfType; sumProvinces = true)
+
+# Arguments
+
+- `country::String`: the name of country you want to choice from the dataframe.
+  The country name should in the data.
+
+- `dfType::Symbol`: there are three kinds of dfType: :confirmed, :deaths, :recovered.
+   :confirmed: data of diagnoses
+   :deaths: data of deaths
+   :recovered: data of Rehabilitation
+
+- `sumProvinces::Bool`: if the function should return the summary data of the country.
+   For instance, 'sumProvinces = false'. Default argument is false.
+
+# Examples
+    
+countryData("Australia", confirmed）
+countryData("Australia", deaths, sumProvinces = false)
+
+"""
 function countryData(country,dfType; sumProvinces = true)
     if dfType == :confirmed
-        df = confirmedDF
+        df = confData
     elseif dfType == :deaths
-        df = deathsDF
+        df = deathsData
     elseif dfType == :recovered
-        df = recoveredDF
+        df = recData
     else
         println("error")
     end
@@ -49,7 +82,71 @@ function countryData(country,dfType; sumProvinces = true)
     end
 end
 
-export cleanNames, countryData, confData, deathsData, recData
+"""
+        get_acf(data, max_lag; ifplot = false)
+
+# Arguments
+
+- `data::Array`: The data want to be calculated.
+   The data should be 1-Dimension Array.
+
+- `max_lag::Int`: the number of lags.
+   
+- `ifplot::Bool`: plot the array or nor.
+
+# Examples
+    
+data = [1,2,3,4,5,6,7,8,9,10]
+
+get_acf(data, 2)
+get_acf(data, 2, ifplot = true)
+
+"""
+function get_acf(data,max_lag; ifplot= false)
+    
+   k = max_lag
+   acf = []
+   n = length(data)
+   avg = mean(data) 
+    
+   for x in (0:k)   
+       rk = 0
+       rk1 = 0
+       rk2 = 0
+       sum_rk1 = 0
+       sum_rk2 = 0
+       i = 1+x
+       j = 1
+       
+       while i < n+1
+           rk1 = (data[i]-avg) * (data[i-x]-avg)
+           sum_rk1 = sum_rk1+rk1
+           i = i+1
+       end
+        
+       sum_rk1 = sum_rk1/n  
+        
+       while j < n+1
+           rk2 = (data[j]-avg)^2
+           sum_rk2 = rk2+sum_rk2
+           j=j+1       
+       end
+        
+       sum_rk2 = sum_rk2/n    
+       rk = sum_rk1/sum_rk2
+       rk = round(rk; digits =3 )  
+       append!(acf, rk)       
+   end
+   
+   if ifplot == true
+       return plot(acf[2:end], seriestype = :scatter)
+       
+   elseif ifplot == false      
+       return acf[2:end]
+   end    
+end
+
+export get_acf, countryData, confData, deathsData, recData
 
 end # module
 
