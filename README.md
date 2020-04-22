@@ -10,7 +10,6 @@ The functions and Dataset you can use now:
 ```julia
 function:
 
-cleanNames()
 countryData()
 
 Dataset:
