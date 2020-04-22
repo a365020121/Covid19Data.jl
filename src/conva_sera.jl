@@ -145,6 +145,62 @@ function get_acf(data,max_lag; ifplot= false)
    end    
 end
 
+"""
+        get_pacf(data, max_lag; ifplot = false)
+
+# Arguments
+
+- `data::Array`: The data want to be calculated.
+   The data should be 1-Dimension Array.
+
+- `max_lag::Int`: the number of lags.
+   
+- `ifplot::Bool`: plot the array or nor.
+
+# Examples
+    
+data = [1,2,3,4,5,6,7,8,9,10]
+get_pacf(data, 2)
+get_pacf(data, 2, ifplot = true)
+
+"""
+function get_pacf(data, max_lag, ifplot = false)
+    
+    k = max_lag
+    data = get_acf(data,k,false)
+    result = zeros((length(data),length(data)))
+    result[1,1] = data[1]
+    
+    for i = 1:length(data)-1
+        sum_1 = 0
+        sum_2 = 0
+        
+        for j = 1:i
+            sum_1 = sum_1 + result[i,j]*data[i+1-j]
+            sum_2 = sum_2 + result[i,j]*data[j]
+        end
+            
+        result[i+1,i+1] = (data[i+1]-sum_1)/(1-sum_2) 
+        
+        for j = 1:i
+            result[i+1,j] = result[i,j] - result[i+1,i+1]*result[i,i-j+1]
+        end
+    end
+    
+    pacf = []
+    
+    for i= 1:k
+        append!(pacf, round(result[i,i],digits=3))
+    end
+    
+    if ifplot == true
+        return plot(pacf, seriestype = :scatter)
+        
+    elseif ifplot == false  
+        return pacf
+    end      
+end
+
 export get_acf, countryData, confData, deathsData, recData
 
 end # module
