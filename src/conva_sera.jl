@@ -97,7 +97,6 @@ end
 # Examples
     
 data = [1,2,3,4,5,6,7,8,9,10]
-
 get_acf(data, 2)
 get_acf(data, 2, ifplot = true)
 
