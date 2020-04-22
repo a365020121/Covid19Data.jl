@@ -52,7 +52,7 @@ cleanNames(recData)
    :deaths: data of deaths
    :recovered: data of Rehabilitation
 
-- `sumProvinces::Bool': if the function should return the summary data of the country.
+- `sumProvinces::Bool`: if the function should return the summary data of the country.
    For instance, 'sumProvinces = false'. Default argument is false.
 
 # Examples
@@ -92,7 +92,7 @@ end
 
 - `max_lag::Int`: the number of lags.
    
-- `ifplot::Bool': plot the array or nor.
+- `ifplot::Bool`: plot the array or nor.
 
 # Examples
     
