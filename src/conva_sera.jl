@@ -16,6 +16,10 @@ confData = makeDF(confirmedFile)
 deathsData = makeDF(deathsFile)
 recData = makeDF(recoveredFile)
 
+cleanNames(confirmedDF)
+cleanNames(deathsDF)
+cleanNames(recoveredDF)
+
 function cleanNames(df)
     rename!(df,Symbol("Province/State")=>:ProvinceOrState)
     rename!(df,Symbol("Country/Region")=>:CountryOrRegion)
@@ -49,7 +53,9 @@ function countryData(country,dfType; sumProvinces = true)
     end
 end
 
-export cleanNames, countryData, confData, deathsData, recData
+
+
+export countryData, confData, deathsData, recData
 
 end # module
 
