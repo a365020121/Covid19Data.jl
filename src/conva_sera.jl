@@ -29,17 +29,17 @@ function cleanNames(df)
     end
 end
 
-cleanNames(confirmedDF)
-cleanNames(deathsDF)
-cleanNames(recoveredDF)
+cleanNames(confData)
+cleanNames(deathsData)
+cleanNames(recData)
 
 function countryData(country,dfType; sumProvinces = true)
     if dfType == :confirmed
-        df = confirmedDF
+        df = confData
     elseif dfType == :deaths
-        df = deathsDF
+        df = deathsData
     elseif dfType == :recovered
-        df = recoveredDF
+        df = recData
     else
         println("error")
     end
