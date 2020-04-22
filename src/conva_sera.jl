@@ -61,7 +61,6 @@ countryData("Australia", confirmed）
 countryData("Australia", deaths, sumProvinces = false)
 
 """
-
 function countryData(country,dfType; sumProvinces = true)
     if dfType == :confirmed
         df = confData
@@ -103,7 +102,6 @@ get_acf(data, 2)
 get_acf(data, 2, ifplot = true)
 
 """
-
 function get_acf(data,max_lag; ifplot= false)
     
    k = max_lag
