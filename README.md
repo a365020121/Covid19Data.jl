@@ -11,6 +11,10 @@ The functions and Dataset you can use now:
 function:
 
 countryData()
+get_acf()
+arma_predict()
+ts_ipred_coef
+ts_ipred_
 
 Dataset:
 

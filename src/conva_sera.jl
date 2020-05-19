@@ -765,7 +765,7 @@ function arma_predict(x,a,b,sigma,n)
 end
 
 
-export get_acf, countryData, confData, deathsData, recData, arma_predict, ts_ipred_coef, ts_ipred_coef, arma_gamma, arma_wold, filter, arma_gen, ma_gen
+export get_acf, countryData, confData, deathsData, recData, arma_predict, ts_ipred_coef, ts_ipred, arma_gamma, arma_wold, filter, arma_gen, ma_gen
 export ma_solve, arma_solve, autocorvariance
 
 end # module
