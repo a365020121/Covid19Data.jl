@@ -97,9 +97,11 @@ end
 
 # Examples
     
-data = [1,2,3,4,5,6,7,8,9,10]
-get_acf(data, 2)
-get_acf(data, 2, ifplot = true)
+        data = [1,2,3,4,5,6,7,8,9,10]
+
+        get_acf(data, 2)
+
+        get_acf(data, 2, ifplot = true)
 
 """
 function get_acf(data,max_lag; ifplot= false)
@@ -160,9 +162,9 @@ end
 
 # Examples
     
-data = [1,2,3,4,5,6,7,8,9,10]
-get_pacf(data, 2)
-get_pacf(data, 2, ifplot = true)
+        data = [1,2,3,4,5,6,7,8,9,10]
+        get_pacf(data, 2)
+        get_pacf(data, 2, ifplot = true)
 
 """
 function get_pacf(data, max_lag; ifplot = false)
@@ -216,7 +218,7 @@ end
 - `q::Int`: the order of MA model.
 
 # return 
-[a,b sigma]
+        [a,b sigma]
 - `a::Array`: coefficient of AR model
 - `b::Array`: coefficient of MA model
 - `sigma::Float`: sigma
@@ -225,10 +227,10 @@ end
 # Examples
     
 
-output = arma_solve(data,a,b)
-a = output[1]
-b = output[2]
-sigma = output[3]
+        output = arma_solve(data,a,b)
+        a = output[1]
+        b = output[2]
+        sigma = output[3]
 
 """
 function arma_solve(data,p,q)
@@ -282,8 +284,8 @@ end
 
 # Examples
 
-data = [1,2,3,4,5,6,7,8,9,10]
-autocorvariance(data, 4)
+        data = [1,2,3,4,5,6,7,8,9,10]
+        autocorvariance(data, 4)
 
 """
 function autocorvariance(data,k)
@@ -336,10 +338,10 @@ end
 
 # Examples
     
-output = ma_solve(gms)
+        output = ma_solve(gms)
 
-b = output[1]
-sigma = output[2]
+        b = output[1]
+        sigma = output[2]
 
 """
 function ma_solve(gms)
@@ -402,7 +404,7 @@ x
 
 # Examples
     
-output = ma_gen(10,a,sigma = 0.88)
+        output = ma_gen(10,a,sigma = 0.88)
 
 """
 function ma_gen(n,a;sigma=1)
@@ -443,12 +445,12 @@ out
 - `out::Array`: created data
 
 # Examples
+```julia
+        x = [1,2,3,4,5,6]
+        w = [1,2,3]
 
-x = [1,2,3,4,5,6]
-w = [1,2,3]
-
-output = filter(x,w,method = "convolution")
-
+        output = filter(x,w,method = "convolution")
+```
 """
 function filter(x, w, method)
     lenx = length(x)
@@ -506,10 +508,10 @@ psi
 
 # Examples
 
-a = [1.1, 0.2, 0.3]
-b = [0.2, -0.3]
+        a = [1.1, 0.2, 0.3]
+        b = [0.2, -0.3]
 
-output = arma_wold(10,a,b = b)
+        output = arma_wold(10,a,b = b)
 
 """
 function arma_wold(n,a;b = zeros(1,1))
@@ -555,10 +557,10 @@ gam
 
 # Examples
 
-a = [1.1, 0.2, 0.3]
-b = [0.2, -0.3]
+        a = [1.1, 0.2, 0.3]
+        b = [0.2, -0.3]
 
-output = arma_gamma(10,a,b = b,sigma=0.95)
+        output = arma_gamma(10,a,b = b,sigma=0.95)
 
 """
 function arma_gamma(n,a;b::Array = zeros(1,1),sigma = 1.0)
@@ -590,10 +592,10 @@ Using autocorvariance to calculate coefficients of best linear predictor
 - `nu::Array`: square error of the predictor
 # Examples
 
-gam = [1, 0.4, -0.4, 1.2, 2.3]
-output = ts_ipred_coef(gam)
-theta = output[1]
-nu = output[2]
+        gam = [1, 0.4, -0.4, 1.2, 2.3]
+        output = ts_ipred_coef(gam)
+        theta = output[1]
+        nu = output[2]
 
 """
 function ts_ipred_coef(gam)
@@ -649,14 +651,14 @@ Using autocorvariance to do one-step-ahead prediction
 - `lb::Array`: the low boundary of predictive values
 - `ub::Array`: the up boundary of predictive values
 - `conf::Float`: the confidence.
+```
+        x = [1,2,3,4,5,6,7,8,9,10]
+        gam = [1, 0.4, -0.4, 1.2, 2.3]
+        output = ts_ipred(x,gams;demean = true, endx = length(x), conf = 0.95)
 
-x = [1,2,3,4,5,6,7,8,9,10]
-gam = [1, 0.4, -0.4, 1.2, 2.3]
-output = ts_ipred(x,gams;demean = true, endx = length(x), conf = 0.95)
-
-x = output[1]
-pred = output[2]
-
+        x = output[1]
+        pred = output[2]
+```
 """
 function ts_ipred(x,gams;demean = false, endx = length(x), conf = 0.95)
     if ndims(gams)==1
@@ -725,11 +727,13 @@ output
 
 - `output::Array`: predictive data points.
 
-x = [1,2,3,4,5,6,7,8,9,10]
-a = [1.1, 0.4, -0.4]
-b = [1.2, 0.3]
-output = arma_predict(x, a, b, 1, 3)
-
+# Example
+```
+        x = [1,2,3,4,5,6,7,8,9,10]
+        a = [1.1, 0.4, -0.4]
+        b = [1.2, 0.3]
+        output = arma_predict(x, a, b, 1, 3)
+```
 
 """
 function arma_predict(x,a,b,sigma,n)
@@ -765,7 +769,7 @@ function arma_predict(x,a,b,sigma,n)
 end
 
 
-export get_acf, countryData, confData, deathsData, recData, arma_predict, ts_ipred_coef, ts_ipred, arma_gamma, arma_wold, filter, arma_gen, ma_gen
+export get_acf,get_pacf, countryData, confData, deathsData, recData, arma_predict, ts_ipred_coef, ts_ipred, arma_gamma, arma_wold, filter, arma_gen, ma_gen
 export ma_solve, arma_solve, autocorvariance
 
 end # module
