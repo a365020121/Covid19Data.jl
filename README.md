@@ -33,6 +33,8 @@ recData # recovered dataset
 
 How to use these funcitons:
 
+you also can add ? before funciton to find the document.
+
 ```julia
 # the data we use
 data
