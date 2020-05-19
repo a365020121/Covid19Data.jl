@@ -170,7 +170,7 @@ end
 function get_pacf(data, max_lag; ifplot = false)
     
     k = max_lag
-    data = get_acf(data,k,false)
+    data = get_acf(data,k,ifplot = false)
     result = zeros((length(data),length(data)))
     result[1,1] = data[1]
     
@@ -235,7 +235,6 @@ end
 """
 function arma_solve(data,p,q)
 
-    data = test_data
     Gpq = zeros(p,p)
     pmax = round(sqrt(length(data)))
 
@@ -246,7 +245,7 @@ function arma_solve(data,p,q)
             Gpq[i,j] = gms[abs(q+i-j)+1]
         end
     end
-    
+
     gs = gms[(q+1+1):(q+p+1)]
     a = inv(Gpq)*gs
     aa = pushfirst!(a,-1)
@@ -741,14 +740,14 @@ function arma_predict(x,a,b,sigma,n)
     lena = length(a)
     lenb = length(b)
     lenx = length(x)
-    mean = 0
+    meanx = 0
     
     if mean(x)!= 0
         meanx = mean(x)
         x = x.-meanx
     end
     
-    gams = arma_gamma(lenx,a,b,sigma)
+    gams = arma_gamma(lenx,a,b = b,sigma = sigma)
     pred = ts_ipred(x,gams,demean= false,endx = lenx, conf = 0.95)
     pred = pred[2]
     residual = x.-pred
@@ -764,8 +763,8 @@ function arma_predict(x,a,b,sigma,n)
             x[i+lenx] = x[i+lenx]+b[p]*residual[i+lenx-p]
         end
     end
-    output = x.+meanxx
-    return output
+    output = x.+meanx
+    return output[(lenx+1):(lenx+n)]
 end
 
 
