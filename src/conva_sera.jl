@@ -315,7 +315,7 @@ function autocorvariance(data,k)
         rk = round(rk; digits =3 )  
         append!(acf, rk)  
     end
-    return acf
+    return acf[1:k]
 end
 
 
@@ -417,6 +417,27 @@ function ma_gen(n,a;sigma=1)
     return x
 end
 
+"""
+        arma_gen(n,a,b;sigma = 1, n0=1000, x0 = zeros(length(n0),1))
+
+# Arguments
+
+- `n::Int`: the number of created data.
+- `a::Array`: the coefficient of AR model.
+- `b:Array`: the coefficient of MA model.
+- `sigma::Float`: sigma of model.
+
+# return 
+
+x
+
+- `x::Array`: created data
+
+# Examples
+    
+        output = arma_gen(10,a,b,sigma = 0.88)
+
+"""
 function arma_gen(n,a,b;sigma = 1, n0=1000, x0 = zeros(length(n0),1))
     n2 = n0+n
     p = length(a)
@@ -747,7 +768,7 @@ function arma_predict(x,a,b,sigma,n)
         x = x.-meanx
     end
     
-    gams = arma_gamma(lenx,a,b = b,sigma = sigma)
+    gams = autocorvariance(x,lenx)
     pred = ts_ipred(x,gams,demean= false,endx = lenx, conf = 0.95)
     pred = pred[2]
     residual = x.-pred
