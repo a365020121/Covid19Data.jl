@@ -33,7 +33,7 @@ recData # recovered dataset
 
 How to use these funcitons:
 
-## you also can add ? before funciton to find the document.
+## you also can add ? before a funciton to find the document.
 ## like ?arma_gen()
 
 ```julia
